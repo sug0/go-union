@@ -1,7 +1,6 @@
-package main
+package union
 
 import (
-    "fmt"
     "errors"
     "unsafe"
 )
@@ -12,10 +11,15 @@ type Union struct {
     data []byte
 }
 
-// A type capable of being decoded from a Union.
-type UnionDecoder interface {
-    DecodeUnion(u Union) error
+// A type capable of being casted to from a Union.
+type UnionCaster interface {
+    CastUnion(u Union) error
 }
+
+// Union related errors.
+var (
+    UnionTooSmallErr = errors.New("union: not enough space in union")
+)
 
 // Returns the (memory) capacity of this Union.
 func (u Union) Cap() uintptr {
@@ -27,18 +31,7 @@ func (u Union) Pointer() unsafe.Pointer {
     return unsafe.Pointer(&u.data[0])
 }
 
-// The union types we'll be working with...
-type (
-    Int    struct { value *int }
-    String struct { value *string }
-)
-
-// Union related errors.
-var (
-    UnionTooSmallErr = errors.New("union: not enough space in union")
-)
-
-func (i *Int) DecodeUnion(u Union) error {
+func (i *Int) CastUnion(u Union) error {
     if u.Cap() < unsafe.Sizeof(int(0)) {
         return UnionTooSmallErr
     }
@@ -46,7 +39,7 @@ func (i *Int) DecodeUnion(u Union) error {
     return nil
 }
 
-func (s *String) DecodeUnion(u Union) error {
+func (s *String) CastUnion(u Union) error {
     if u.Cap() < unsafe.Sizeof("") {
         return UnionTooSmallErr
     }
@@ -54,7 +47,9 @@ func (s *String) DecodeUnion(u Union) error {
     return nil
 }
 
-func UnionOf(t uintptr, types ...uintptr) Union {
+// Create a new Union from various types. Use union.Sizeof(type{})
+// as the arguments.
+func Of(t uintptr, types ...uintptr) Union {
     maxSize := t
     for _, ti := range types {
         if ti > maxSize {
@@ -62,32 +57,4 @@ func UnionOf(t uintptr, types ...uintptr) Union {
         }
     }
     return Union{data: make([]byte, maxSize)}
-}
-
-func main() {
-    stringOrInt := UnionOf(
-        unsafe.Sizeof(int(0)),
-        unsafe.Sizeof(string("")),
-    )
-
-    var (
-        s String
-        i Int
-    )
-
-    err := s.DecodeUnion(stringOrInt)
-    if err != nil {
-        panic(err)
-    }
-    *s.value = "cenas"
-
-    fmt.Println(stringOrInt)
-
-    err = i.DecodeUnion(stringOrInt)
-    if err != nil {
-        panic(err)
-    }
-    *i.value = 45
-
-    fmt.Println(stringOrInt)
 }
