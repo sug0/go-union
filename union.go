@@ -31,22 +31,6 @@ func (u Union) Pointer() unsafe.Pointer {
     return unsafe.Pointer(&u.data[0])
 }
 
-func (i *Int) CastUnion(u Union) error {
-    if u.Cap() < unsafe.Sizeof(int(0)) {
-        return UnionTooSmallErr
-    }
-    i.value = (*int)(u.Pointer())
-    return nil
-}
-
-func (s *String) CastUnion(u Union) error {
-    if u.Cap() < unsafe.Sizeof("") {
-        return UnionTooSmallErr
-    }
-    s.value = (*string)(u.Pointer())
-    return nil
-}
-
 // Create a new Union from various types. Use union.Sizeof(type{})
 // as the arguments.
 func Of(t uintptr, types ...uintptr) Union {
