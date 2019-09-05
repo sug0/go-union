@@ -35,6 +35,7 @@ func main() {
     var f Float32Ptr
 
     intOrFloat.Cast(&f)
+    *f.ptr = 343.12
 
     switch intOrFloat.Kind() {
     case KindFloat32:
