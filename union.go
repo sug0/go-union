@@ -27,5 +27,10 @@ func Of(t uintptr, types ...uintptr) Union {
             maxSize = ti
         }
     }
-    return Union{data: make([]byte, maxSize)}
+    return WithCapacity(maxSize)
+}
+
+// Create a new Union with the given capacity in bytes.
+func WithCapacity(capacity uintptr) Union {
+    return Union{data: make([]byte, capacity)}
 }
