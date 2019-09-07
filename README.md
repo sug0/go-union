@@ -6,6 +6,10 @@ code.
 The API to work with them is somewhat ergonomic, utilizing
 Go's interfaces to cast around the different types.
 
+## Who would use this package?
+
+A madman. Use the `unsafe` package directly, honestly.
+
 ## API documentation
 
 Find it at godoc:
