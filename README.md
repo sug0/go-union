@@ -21,21 +21,20 @@ package main
 
 import (
     "fmt"
-    "reflect"
 
     tagged "github.com/sug0/go-union/tagged"
     types "github.com/sug0/go-union/types"
 )
 
-// these fields need to be exported!
-type MyEnum struct {
-    Float32 *types.Float32
-    Int32   *types.Int32
-}
-
 func main() {
+    // these fields need to be exported!
+    myEnum := struct {
+        Float32 *types.Float32
+        Int32   *types.Int32
+    }{}
+
     // this will return a float32's zero value
-    intOrFloat, err := tagged.Zero(0, reflect.ValueOf(MyEnum{}))
+    intOrFloat, err := tagged.Zero(0, myEnum)
     if err != nil {
         panic(err)
     }

@@ -20,13 +20,15 @@ type Union struct {
 // Returns the zero value of the field 'fieldNum' of
 // a Union described by 'aStruct', which is a struct
 // where all its fields are UnionCaster implementers.
-func Zero(fieldNum int, aStruct reflect.Value) (Union, error) {
-    // aStruct needs to be, well, a struct
-    if aStruct.Kind() != reflect.Struct {
+func Zero(fieldNum int, aStruct interface{}) (Union, error) {
+    s := reflect.ValueOf(aStruct)
+
+    // s needs to be, well, a struct
+    if s.Kind() != reflect.Struct {
         return Union{}, union.ErrInvalidStruct
     }
 
-    numFields := aStruct.NumField()
+    numFields := s.NumField()
 
     if numFields == 0 {
         return Union{}, union.ErrInvalidStruct
@@ -38,7 +40,7 @@ func Zero(fieldNum int, aStruct reflect.Value) (Union, error) {
     var maxSize uintptr
 
     for i := 0; i < numFields; i++ {
-        caster, ok := aStruct.Field(i).Interface().(UnionCaster)
+        caster, ok := s.Field(i).Interface().(UnionCaster)
         if !ok {
             return Union{}, union.ErrNotCaster
         }
@@ -47,7 +49,7 @@ func Zero(fieldNum int, aStruct reflect.Value) (Union, error) {
         }
     }
 
-    k := aStruct.Field(fieldNum).Interface().(UnionKind)
+    k := s.Field(fieldNum).Interface().(UnionKind)
 
     return Union{
         kind: k.UnionKind(),
