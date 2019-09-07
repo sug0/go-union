@@ -17,24 +17,21 @@ type Union struct {
     union union.Union
 }
 
-// Returns the zero value of the field 'fieldNum' of
-// a Union described by 'aStruct', which is a struct
-// where all its fields are UnionCaster implementers.
-func Zero(fieldNum int, aStruct interface{}) (Union, error) {
+// Returns a zeroed Union described by 'aStruct',
+// which is a struct where all its fields are
+// UnionCaster implementers.
+func Uninit(aStruct interface{}) (*Union, error) {
     s := reflect.ValueOf(aStruct)
 
-    // s needs to be, well, a struct
+    // aStruct needs to be, well, a struct
     if s.Kind() != reflect.Struct {
-        return Union{}, union.ErrInvalidStruct
+        return nil, union.ErrInvalidStruct
     }
 
     numFields := s.NumField()
 
     if numFields == 0 {
-        return Union{}, union.ErrInvalidStruct
-    }
-    if fieldNum < 0 || fieldNum >= numFields {
-        return Union{}, union.ErrInvalidIndex
+        return nil, union.ErrInvalidStruct
     }
 
     var maxSize uintptr
@@ -42,19 +39,24 @@ func Zero(fieldNum int, aStruct interface{}) (Union, error) {
     for i := 0; i < numFields; i++ {
         caster, ok := s.Field(i).Interface().(UnionCaster)
         if !ok {
-            return Union{}, union.ErrNotCaster
+            return nil, union.ErrNotCaster
         }
         if size := caster.UnionSize(); size > maxSize {
             maxSize = size
         }
     }
 
-    k := s.Field(fieldNum).Interface().(UnionKind)
+    return &Union{union: union.WithCapacity(maxSize)}, nil
+}
 
-    return Union{
-        kind: k.UnionKind(),
-        union: union.WithCapacity(maxSize),
-    }, nil
+// The analogous of Uninit(), but with an initialized value.
+func InitWith(aStruct interface{}, initUnion func(*Union)) (*Union, error) {
+    u, err := Uninit(aStruct)
+    if err != nil {
+        return nil, err
+    }
+    initUnion(u)
+    return u, nil
 }
 
 // Returns the type of the Union's value that is currently in use.
