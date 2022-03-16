@@ -2,14 +2,13 @@ package tagged
 
 import (
     "reflect"
-    "sync/atomic"
 
     union "github.com/sug0/go-union"
 )
 
 // The type that is currently in use
 // by the union.
-type Kind int32
+type Kind int
 
 // A tagged Union type.
 type Union struct {
@@ -60,16 +59,19 @@ func InitWith(aStruct interface{}, initUnion func(*Union)) (*Union, error) {
 }
 
 // Returns the type of the Union's value that is currently in use.
+//go:inline
 func (u *Union) Kind() Kind {
-    return Kind(atomic.LoadInt32((*int32)(&u.kind)))
+    return Kind(u.kind)
 }
 
+//go:inline
 func (u *Union) changeKind(to Kind) {
-    atomic.StoreInt32((*int32)(&u.kind), int32(to))
+    u.kind = to
 }
 
 // Changes the Union's value that is currently in use.
 // Use is governed by the type that implements UnionCaster.
+//go:inline
 func (u *Union) Cast(caster UnionCaster) {
     u.changeKind(caster.UnionKind())
     caster.CastUnion(u.union)
