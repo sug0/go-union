@@ -10,7 +10,7 @@ type Union struct {
 
 // Returns the (memory) capacity of this Union.
 func (u Union) Cap() uintptr {
-    return uintptr(cap(u.data))
+    return uintptr(len(u.data))
 }
 
 // Return a pointer to the Union data.
