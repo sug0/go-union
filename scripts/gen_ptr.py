@@ -55,8 +55,6 @@ def union_caster(t):
     print('')
 
 if __name__ == '__main__':
-    assert len(PRIMITIVES) >= 1
-
     # package header
     print('// THIS PACKAGE IS AUTO GENERATED -- DO NOT EDIT!')
     print('')
@@ -72,9 +70,9 @@ if __name__ == '__main__':
 
     # constants
     print('const (')
-    print('    %s = iota' % typekind(PRIMITIVES[0]))
+    print('    KindUndefined = iota')
 
-    for t in PRIMITIVES[1:]:
+    for t in PRIMITIVES:
         print('    %s' % typekind(t))
 
     print('    KindIota')

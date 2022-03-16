@@ -10,7 +10,8 @@ import (
 )
 
 const (
-    KindBool = iota
+    KindUndefined = iota
+    KindBool
     KindString
     KindInt
     KindInt8
@@ -411,4 +412,3 @@ func (p *Complex128) CastUnion(u union.Union) error {
     p.Ptr = (*complex128)(u.Pointer())
     return nil
 }
-
