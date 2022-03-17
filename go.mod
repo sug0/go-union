@@ -1,3 +1,3 @@
 module github.com/sug0/go-union
 
-go 1.17
+go 1.18
