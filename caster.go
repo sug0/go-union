@@ -14,5 +14,5 @@ type Sized interface {
 // A type capable of being casted to from a Union.
 type UnionCaster interface {
     Sized
-    CastUnion(u Union) error
+    CastFromUnion(u Union) error
 }

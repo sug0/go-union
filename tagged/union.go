@@ -74,5 +74,5 @@ func (u *Union) changeKind(to Kind) {
 //go:inline
 func (u *Union) Cast(caster UnionCaster) {
     u.changeKind(caster.UnionKind())
-    caster.CastUnion(u.union)
+    caster.CastFromUnion(u.union)
 }

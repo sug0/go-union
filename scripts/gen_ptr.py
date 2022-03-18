@@ -45,7 +45,7 @@ def union_size(t):
     print('')
 
 def union_caster(t):
-    print('func (p *%s) CastUnion(u union.Union) error {' % typename(t))
+    print('func (p *%s) CastFromUnion(u union.Union) error {' % typename(t))
     print('    if u.Cap() < p.UnionSize() {')
     print('        return union.ErrTooSmall')
     print('    }')

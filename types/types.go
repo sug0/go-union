@@ -45,7 +45,7 @@ func (p *Bool) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Bool) CastUnion(u union.Union) error {
+func (p *Bool) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -65,7 +65,7 @@ func (p *String) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *String) CastUnion(u union.Union) error {
+func (p *String) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -85,7 +85,7 @@ func (p *Int) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Int) CastUnion(u union.Union) error {
+func (p *Int) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -105,7 +105,7 @@ func (p *Int8) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Int8) CastUnion(u union.Union) error {
+func (p *Int8) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -125,7 +125,7 @@ func (p *Int16) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Int16) CastUnion(u union.Union) error {
+func (p *Int16) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -145,7 +145,7 @@ func (p *Int32) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Int32) CastUnion(u union.Union) error {
+func (p *Int32) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -165,7 +165,7 @@ func (p *Int64) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Int64) CastUnion(u union.Union) error {
+func (p *Int64) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -185,7 +185,7 @@ func (p *Uint) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uint) CastUnion(u union.Union) error {
+func (p *Uint) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -205,7 +205,7 @@ func (p *Uint8) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uint8) CastUnion(u union.Union) error {
+func (p *Uint8) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -225,7 +225,7 @@ func (p *Uint16) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uint16) CastUnion(u union.Union) error {
+func (p *Uint16) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -245,7 +245,7 @@ func (p *Uint32) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uint32) CastUnion(u union.Union) error {
+func (p *Uint32) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -265,7 +265,7 @@ func (p *Uint64) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uint64) CastUnion(u union.Union) error {
+func (p *Uint64) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -285,7 +285,7 @@ func (p *Uintptr) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Uintptr) CastUnion(u union.Union) error {
+func (p *Uintptr) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -305,7 +305,7 @@ func (p *Byte) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Byte) CastUnion(u union.Union) error {
+func (p *Byte) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -325,7 +325,7 @@ func (p *Rune) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Rune) CastUnion(u union.Union) error {
+func (p *Rune) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -345,7 +345,7 @@ func (p *Float32) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Float32) CastUnion(u union.Union) error {
+func (p *Float32) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -365,7 +365,7 @@ func (p *Float64) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Float64) CastUnion(u union.Union) error {
+func (p *Float64) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -385,7 +385,7 @@ func (p *Complex64) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Complex64) CastUnion(u union.Union) error {
+func (p *Complex64) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
@@ -405,10 +405,11 @@ func (p *Complex128) UnionSize() uintptr {
     return unsafe.Sizeof(*p.Ptr)
 }
 
-func (p *Complex128) CastUnion(u union.Union) error {
+func (p *Complex128) CastFromUnion(u union.Union) error {
     if u.Cap() < p.UnionSize() {
         return union.ErrTooSmall
     }
     p.Ptr = (*complex128)(u.Pointer())
     return nil
 }
+
