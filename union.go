@@ -18,6 +18,11 @@ func (u Union) Pointer() unsafe.Pointer {
     return unsafe.Pointer(&u.data[0])
 }
 
+// Casts this Union into a new data type.
+func (u Union) CastTo(caster UnionCaster) {
+    caster.CastFromUnion(u)
+}
+
 // Create a new Union from various types. Use unsafe.Sizeof(type{})
 // as the arguments.
 func Of(t uintptr, types ...uintptr) Union {

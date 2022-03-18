@@ -59,20 +59,22 @@ func InitWith(aStruct interface{}, initUnion func(*Union)) (*Union, error) {
 }
 
 // Returns the type of the Union's value that is currently in use.
-//go:inline
 func (u *Union) Kind() Kind {
     return Kind(u.kind)
 }
 
-//go:inline
-func (u *Union) changeKind(to Kind) {
+// Sets the type of the Union's value that is currently in use.
+func (u *Union) ChangeKind(to Kind) {
     u.kind = to
 }
 
-// Changes the Union's value that is currently in use.
-// Use is governed by the type that implements UnionCaster.
-//go:inline
-func (u *Union) Cast(caster UnionCaster) {
-    u.changeKind(caster.UnionKind())
-    caster.CastFromUnion(u.union)
+// Returns the raw data in the Union.
+func (u *Union) Data() union.Union {
+    return u.union
+}
+
+// Casts this Union into a new data type.
+func (u *Union) CastTo(caster UnionCaster) {
+    u.Data().CastTo(caster)
+    u.ChangeKind(caster.UnionKind())
 }

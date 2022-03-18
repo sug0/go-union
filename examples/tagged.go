@@ -20,7 +20,7 @@ func main() {
     // Initialize the union with a value.
     intOrFloat, err := tagged.InitWith(myEnum, func(u *tagged.Union) {
         var f types.Float32
-        u.Cast(&f)
+        u.CastTo(&f)
         *f.Ptr = 343.12
     })
     if err != nil {
@@ -38,7 +38,7 @@ func main() {
 
     // Update content.
     var i types.Int32
-    intOrFloat.Cast(&i)
+    intOrFloat.CastTo(&i)
     *i.Ptr = 45
 
     // Debug contents.
